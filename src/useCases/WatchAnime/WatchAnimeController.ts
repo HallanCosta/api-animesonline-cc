@@ -8,7 +8,7 @@ export class WatchAnimeController {
 
   async handle(request: Request, response: Response) {
     const { idEpisode } = request.params;
-
+    
     try {
       await this.watchAnimeUseCase.execute({idEpisode});
 
