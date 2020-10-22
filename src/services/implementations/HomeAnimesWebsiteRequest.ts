@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import path from 'path';
+import { TAnimeRecents } from '../IHomeWebsiteRequest';
 
 export class HomeAnimesWebsiteRequest {
 
@@ -20,12 +21,10 @@ export class HomeAnimesWebsiteRequest {
     };
   }
 
-  
-
-  async animesRecents() {
+  async animesRecents(): Promise<TAnimeRecents[]> {
     const { browser, page  } = await this.config();
-    
-    await page.evaluate(() => {
+
+    const animesRecentsData = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');
       
       const sectionAnimesRecentsPosterArchor: NodeListOf<HTMLAnchorElement> = sectionAnimes[0]
@@ -42,34 +41,45 @@ export class HomeAnimesWebsiteRequest {
       const sectionAnimesRecentsPosterRatingsArray = [...sectionAnimesRecentsPosterRating];
       const sectionAnimesRecentsDataTitlesArray = [...sectionAnimesRecentsDataTitle];
       
-      const animesRecentsPosterArchors = sectionAnimesRecentsPosterArchorArray.map(archor => ({
+      const anchors = sectionAnimesRecentsPosterArchorArray.map(archor => ({
         href: archor.href
       }));
  
-      const animesRecentsPosterImgs = sectionAnimesRecentsPosterImgArray.map(img => ({
+      const images = sectionAnimesRecentsPosterImgArray.map(img => ({
         src: img.src,
         alt: img.alt
       }));
       
-      const animesRecentsPosterRatings = sectionAnimesRecentsPosterRatingsArray.map(rating => ({
-        score: rating.innerText
+      const ratings = sectionAnimesRecentsPosterRatingsArray.map(rating => ({
+        rating: rating.innerText
       }));
 
-      const animesRecentsDataTitles = sectionAnimesRecentsDataTitlesArray.map(name => ({
-        title: name.innerText
+      const titles = sectionAnimesRecentsDataTitlesArray.map(titleAnime => ({
+        title: titleAnime.innerText
       }));
 
       console.log('Animes Recentes >');
-      console.log('Links: ', animesRecentsPosterArchors);
-      console.log('Images: ', animesRecentsPosterImgs);
-      console.log('Scores: ', animesRecentsPosterRatings);
-      console.log('AnimesTitles: ', animesRecentsDataTitles);
+      console.log('AnimesTitles: ', titles);
+      console.log('Images: ', images);
+      console.log('Ratings: ', ratings);
+      console.log('Links: ', anchors);
+
+      const anime = titles.map(({title}, index) => ({
+        title,  
+        image: images[index].src,
+        rating: ratings[index].rating,
+        url: anchors[index].href
+      }));
+
+      return anime;
     });
 
     await browser.close();
-  }
 
-  async latestEpisodes() {
+    return animesRecentsData;
+  }
+  // latestEpisodes
+  async list() {
     const { browser, page } = await this.config();
 
     await page.evaluate(() => {

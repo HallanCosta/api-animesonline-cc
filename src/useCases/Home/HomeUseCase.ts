@@ -7,6 +7,8 @@ export class HomeUseCase {
   ) {}
 
   async execute() {
-    await this.home.animesRecents();
+    const animesRecents = await this.home.animesRecents();
+
+    return animesRecents;
   }
 }

@@ -10,7 +10,7 @@ export class HomeController {
     try {
       const home = await this.homeUseCase.execute();
 
-      return response.json({ home: 'HomeRequestSuccesfuly' });
+      return response.status(200).json(home);
     } catch (err) {
       return response.json({
         message: err.message || 'Unexpected error.'
