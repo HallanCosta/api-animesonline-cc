@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 import path from 'path';
-import { TAnimeRecents } from '../IHomeWebsiteRequest';
+import { TAnime, TEpisode } from '../IHomeWebsiteRequest';
 
 export class HomeAnimesWebsiteRequest {
 
@@ -21,7 +21,19 @@ export class HomeAnimesWebsiteRequest {
     };
   }
 
-  async animesRecents(): Promise<TAnimeRecents[]> {
+  async request() {
+    const sectionAnimesRecents = await this.animesRecents();
+    const sectionLatestEpisodes = await this.latestEpisodes();
+    const sectionAnimesList = await  this.animesList();
+
+    return {
+      sectionAnimesRecents,
+      sectionLatestEpisodes,
+      sectionAnimesList
+    }
+  }
+
+  async animesRecents(): Promise<TAnime[]> {
     const { browser, page  } = await this.config();
 
     const animesRecentsData = await page.evaluate(() => {
@@ -62,7 +74,7 @@ export class HomeAnimesWebsiteRequest {
       console.log('AnimesTitles: ', titles);
       console.log('Images: ', images);
       console.log('Ratings: ', ratings);
-      console.log('Links: ', anchors);
+      console.log('Url: ', anchors);
 
       const anime = titles.map(({title}, index) => ({
         title,  
@@ -78,11 +90,11 @@ export class HomeAnimesWebsiteRequest {
 
     return animesRecentsData;
   }
-  // latestEpisodes
-  async list() {
+
+  async latestEpisodes(): Promise<TEpisode[]> {
     const { browser, page } = await this.config();
 
-    await page.evaluate(() => {
+    const episodes = await page.evaluate(() => {
       
       const sectionEpisodesRecentsPosterArchor: NodeListOf<HTMLAnchorElement> = document
         .querySelectorAll('#blog article .poster a');
@@ -99,37 +111,48 @@ export class HomeAnimesWebsiteRequest {
       const sectionEpisodesRecentsEpisodesTitleArray = [...sectionEpisodesRecentsEpisodesTitle];
 
 
-      const episodesRecentsPosterArchors = sectionEpisodesRecentsPosterArchorArray.map(archor => ({
+      const anchors = sectionEpisodesRecentsPosterArchorArray.map(archor => ({
         href: archor.href
       }));
  
-      const episodesRecentsPosterImgs = sectionEpisodesRecentsPosterImgArray.map(img => ({
+      const thumbnails = sectionEpisodesRecentsPosterImgArray.map(img => ({
         src: img.src,
         alt: img.alt
       }));
       
-      const episodesRecentsPosterSubtitleds = sectionEpisodesRecentsPosterSubtitledArray.map(rating => ({
-        score: rating.innerText
+      const subtitleds = sectionEpisodesRecentsPosterSubtitledArray.map(subtitled => ({
+        subtitled: subtitled.innerText
       }));
 
-      const episodesRecentsEpisodesTitles = sectionEpisodesRecentsEpisodesTitleArray.map(name => ({
+      const titles = sectionEpisodesRecentsEpisodesTitleArray.map(name => ({
         title: name.innerText
       }));
 
       console.log('Últimos Episódios >');
-      console.log('Links: ', episodesRecentsPosterArchors);
-      console.log('Images: ', episodesRecentsPosterImgs);
-      console.log('Subtitleds: ', episodesRecentsPosterSubtitleds);
-      console.log('EpisodesTitles: ', episodesRecentsEpisodesTitles);
+      console.log('EpisodesTitles: ', titles);
+      console.log('Thumvnails: ', thumbnails);
+      console.log('Subtitleds: ', subtitleds);
+      console.log('Url: ', anchors);
+      
+      const episode = titles.map(({title}, index) => ({
+        title: title,
+        thumbnail: thumbnails[index].src,
+        subtitled: subtitleds[index].subtitled,
+        url: anchors[index].href
+      }));
+
+      return episode;
     }); 
 
     await browser.close();
+
+    return episodes;
   }
 
-  async animesList() {
+  async animesList(): Promise<TAnime[]> {
     const { browser, page } = await this.config();
 
-    await page.evaluate(() => {
+    const animes = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');
       
       const sectionAnimesRecentsPosterArchor: NodeListOf<HTMLAnchorElement> = sectionAnimes[1]
@@ -146,30 +169,40 @@ export class HomeAnimesWebsiteRequest {
       const sectionAnimesRecentsPosterRatingsArray = [...sectionAnimesRecentsPosterRatings];
       const sectionAnimesRecentsDataTitlesArray = [...sectionAnimesRecentsDataTitles];
       
-      const animesRecentsPosterArchors = sectionAnimesRecentsPosterArchorArray.map(archor => ({
+      const anchors = sectionAnimesRecentsPosterArchorArray.map(archor => ({
         href: archor.href
       }));
  
-      const animesRecentsPosterImgs = sectionAnimesRecentsPosterImgArray.map(img => ({
+      const images = sectionAnimesRecentsPosterImgArray.map(img => ({
         src: img.src,
         alt: img.alt
       }));
       
-      const animesRecentsPosterRatings = sectionAnimesRecentsPosterRatingsArray.map(rating => ({
-        score: rating.innerText
+      const ratings = sectionAnimesRecentsPosterRatingsArray.map(rating => ({
+        rating: rating.innerText
       }));
 
-      const animesRecentsDataTitles = sectionAnimesRecentsDataTitlesArray.map(name => ({
+      const titles = sectionAnimesRecentsDataTitlesArray.map(name => ({
         title: name.innerText
       }));
 
-      console.log('Lista de Animes  >');
-      console.log('Links: ', animesRecentsPosterArchors);
-      console.log('Images: ', animesRecentsPosterImgs);
-      console.log('Scores: ', animesRecentsPosterRatings);
-      console.log('AnimesTitle: ', animesRecentsDataTitles);
+      console.log('AnimesTitles: ', titles);
+      console.log('Images: ', images);
+      console.log('Ratings: ', ratings);
+      console.log('Url: ', anchors);
+
+      const anime = titles.map(({title}, index) => ({
+        title,
+        image: images[index].src,
+        rating: ratings[index].rating,
+        url: anchors[index].href
+      }));
+
+      return anime;
     });
 
     await browser.close();
+
+    return animes;
   }
 }

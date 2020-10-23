@@ -10,11 +10,9 @@ export class WatchAnimeController {
     const { idEpisode } = request.params;
     
     try {
-      await this.watchAnimeUseCase.execute({idEpisode});
+      const episode = await this.watchAnimeUseCase.execute({idEpisode});
 
-      return response.status(200).json({
-        message: 'RequestWatchAnimeController'
-      });
+      return response.status(200).json(episode);
     } catch(err) {
       return response.status(400).json({
         message: err.message || 'Unexpected error'

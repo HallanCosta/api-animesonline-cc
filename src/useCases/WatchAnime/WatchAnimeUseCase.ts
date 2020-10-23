@@ -3,10 +3,12 @@ import { WatchAnimeRequestDTO } from './WatchAnimeDTO';
 
 export class WatchAnimeUseCase {
   constructor(
-    private watchAnime: IWatchAnimeWebsiteRequest
+    private watchAnimeWebsiteRequest: IWatchAnimeWebsiteRequest
   ) {}
 
   async execute(data: WatchAnimeRequestDTO) {
-    await this.watchAnime.list(data.idEpisode);
+    const episode = await this.watchAnimeWebsiteRequest.request(data.idEpisode);
+    
+    return episode;
   }
 }

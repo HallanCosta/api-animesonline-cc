@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import path from 'path';
+import { TAnimeEpisode } from '../IWatchAnimeWebsiteRequest';
 
 export class WatchAnimeWebsiteRequest {
   async config(idEpisode: string) {
@@ -19,15 +20,12 @@ export class WatchAnimeWebsiteRequest {
     };
   }
 
-  async list(idEpisode: string) {
+  async request(idEpisode: string): Promise<TAnimeEpisode> {
     const { browser, page } = await this.config(idEpisode);
 
-    await page.evaluate(async () => {
-      
-
+    const episode = await page.evaluate(async () => {
       //sem dublagem url: https://animesonline.cc/episodio/senyoku-no-sigrdrifa-episodio-2/
       //com dublagem url: https://animesonline.cc/episodio/darling-in-the-franxx-episodio-1/
-
       
       let animesURL = undefined;
       const animesURLIframe: NodeListOf<HTMLIFrameElement> = document.querySelectorAll('iframe.metaframe.rptss');
@@ -39,29 +37,40 @@ export class WatchAnimeWebsiteRequest {
 
       if (animeURLIframeArray[1]) {
         animesURL = {
-          Dubbed: animesURLDubbedSubtitled[0],
-          Subtitled: animesURLDubbedSubtitled[1]
+          dubbed: animesURLDubbedSubtitled[0],
+          subtitled: animesURLDubbedSubtitled[1]
         }
       } else {
         animesURL = {
-          Subtitled: animesURLDubbedSubtitled[0]
+          subtitled: animesURLDubbedSubtitled[0]
         }
       }
       const title = document.querySelector('.epih1')?.innerHTML;
       const description = document.querySelector('#info p')?.innerHTML;
-      const { src: imgDescription } = document.querySelector('.imgep img') as HTMLImageElement;
-      const { href: allEpisodesAnimesURL } = document.querySelector('.areaserie a') as HTMLAnchorElement;
-      const allEpisodesAnimesText = document.querySelector('.areaserie a')?.innerHTML;
+      const { src: imageDescription } = document.querySelector('.imgep img') as HTMLImageElement;
+      const { href: episodesAnimeURL } = document.querySelector('.areaserie a') as HTMLAnchorElement;
+      const episodesAnimeURLText = document.querySelector('.areaserie a')?.innerHTML;
 
       console.log('Animes URL: ', animesURL);
       console.log('Anime Title: ', title);
       console.log('Anime desctiption: ', description);
-      console.log('Imagem anime descrição:', imgDescription);
-      console.log('Todos os animes URL: ', allEpisodesAnimesURL);
-      console.log('Todos os animes URL Texto: ', allEpisodesAnimesText);
+      console.log('Imagem anime descrição:', imageDescription);
+      console.log('URL lista de episodios do anime: ', episodesAnimeURL);
+      console.log('URL lista de episodios do anime texto: ', episodesAnimeURLText);
+
+      return {
+        animesURL,
+        title,
+        description,
+        imageDescription,
+        episodesAnimeURL,
+        episodesAnimeURLText
+      }
 
     });
 
     await browser.close();
+
+    return episode as TAnimeEpisode;
   }
 }

@@ -1,15 +1,17 @@
-
-
-export type TAnimeRecents = {
+export type TAnime = {
   title: string;
   image: string,
   rating: string,
   url: string
 }
 
+export type TEpisode = {
+  title: string;
+  thumbnail: string,
+  subtitled: string,
+  url: string
+}
+
 export interface IHomeWebsiteRequest {
-  animesRecents(): Promise<TAnimeRecents>;
-  latestEpisodes(): Promise<void>;
-  animesList(): Promise<void>;
-  list(): Promise<void>;
+  request(): Promise<void>;
 }
