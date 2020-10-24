@@ -15,14 +15,14 @@ export class WatchAnimeWebsiteRequest {
 
     await page.goto(`https://animesonline.cc/episodio/${idEpisode}`);
 
-    const watchAnime = await this.watchAnime(browser, page);
+    const watchAnime = await this.watchAnime(page);
 
     await browser.close();
 
     return watchAnime;
   }
 
-  async watchAnime(browser: Browser, page: Page): Promise<TAnimeEpisode> {
+  async watchAnime(page: Page): Promise<TAnimeEpisode> {
 
     const episode = await page.evaluate(async () => {
       //sem dublagem url: https://animesonline.cc/episodio/senyoku-no-sigrdrifa-episodio-2/

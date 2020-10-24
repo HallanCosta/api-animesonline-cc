@@ -7,6 +7,8 @@ export class AnimeDetailsUseCase {
   ) {}
 
   async execute(data: AnimeDetailsRequestDTO) {
-    await this.animeDetails.request();
+    const animeDetails = await this.animeDetails.request(data.idAnime);
+
+    return animeDetails;
   }
 }

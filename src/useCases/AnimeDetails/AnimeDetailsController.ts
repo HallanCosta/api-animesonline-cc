@@ -8,13 +8,11 @@ export class AnimeDetailsController {
 
   async handle(request: Request, response: Response) {
     const { idAnime } = request.params;
-
+    
     try {
-      await this.animeDetailsUseCase.execute({idAnime});
+      const animeDetails = await this.animeDetailsUseCase.execute({idAnime});
 
-      return response.status(200).json({
-        message: 'sucessf ListEpisodesAnimes'
-      })
+      return response.status(200).json(animeDetails);
     } catch (err) {
       return response.status(400).json({
         message: err.message || 'Unexpected error'
