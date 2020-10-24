@@ -1,15 +1,15 @@
 export type TAnime = {
-  title: string;
+  name: string;
   image: string,
   rating: string,
-  url: string
+  idAnime: string
 }
 
 export type TEpisode = {
-  title: string;
+  name: string;
   thumbnail: string,
   subtitled: string,
-  url: string
+  idEpisode: string
 }
 
 export interface IHomeWebsiteRequest {

@@ -56,9 +56,19 @@ export class HomeAnimesWebsiteRequest {
       const sectionAnimesRecentsPosterRatingsArray = [...sectionAnimesRecentsPosterRating];
       const sectionAnimesRecentsDataTitlesArray = [...sectionAnimesRecentsDataTitle];
       
+      const animesURLExpression = /[\/]/g
       const anchors = sectionAnimesRecentsPosterArchorArray.map(archor => ({
         href: archor.href
       }));
+
+      const anchorsSerialized = anchors.map(url => {
+        const idAnimeSplit = url.href.split(animesURLExpression);
+        const idAnime = idAnimeSplit[4].trim();
+        
+        return({
+          idAnime
+        });
+      });
  
       const images = sectionAnimesRecentsPosterImgArray.map(img => ({
         src: img.src,
@@ -69,15 +79,15 @@ export class HomeAnimesWebsiteRequest {
         rating: rating.innerText
       }));
 
-      const titles = sectionAnimesRecentsDataTitlesArray.map(titleAnime => ({
-        title: titleAnime.innerText
+      const names = sectionAnimesRecentsDataTitlesArray.map(name => ({
+        name: name.innerText
       }));
 
-      const animes = titles.map(({title}, index) => ({
-        title,  
+      const animes = names.map(({name}, index) => ({
+        name,  
         image: images[index].src,
         rating: ratings[index].rating,
-        url: anchors[index].href
+        idAnime: anchorsSerialized[index].idAnime
       }));
 
       console.log('Animes Recentes >');
@@ -87,7 +97,6 @@ export class HomeAnimesWebsiteRequest {
     });
 
     return animesSerialized;
-    // return animesRecentsData;
   }
 
   async latestEpisodes(browser: Browser, page: Page): Promise<TEpisode[]> {
@@ -109,10 +118,19 @@ export class HomeAnimesWebsiteRequest {
       const sectionEpisodesRecentsPosterSubtitledArray = [...sectionEpisodesRecentsPosterSubtitled];
       const sectionEpisodesRecentsEpisodesTitleArray = [...sectionEpisodesRecentsEpisodesTitle];
 
-
+      const animesURLExpression = /[\/]/g
       const anchors = sectionEpisodesRecentsPosterArchorArray.map(archor => ({
         href: archor.href
       }));
+
+      const anchorsSerialized = anchors.map(url => {
+        const idEpisodeSplit = url.href.split(animesURLExpression);
+        const idEpisode = idEpisodeSplit[4].trim();
+        
+        return({
+          idEpisode
+        });
+      });
  
       const thumbnails = sectionEpisodesRecentsPosterImgArray.map(img => ({
         src: img.src,
@@ -124,14 +142,14 @@ export class HomeAnimesWebsiteRequest {
       }));
 
       const titles = sectionEpisodesRecentsEpisodesTitleArray.map(name => ({
-        title: name.innerText
+        name: name.innerText
       }));
       
-      const episodes = titles.map(({title}, index) => ({
-        title: title,
+      const episodes = titles.map(({name}, index) => ({
+        name,
         thumbnail: thumbnails[index].src,
         subtitled: subtitleds[index].subtitled,
-        url: anchors[index].href
+        idEpisode: anchorsSerialized[index].idEpisode
       }));
 
       console.log('Últimos Episódios >');
@@ -163,9 +181,19 @@ export class HomeAnimesWebsiteRequest {
       const sectionAnimesRecentsPosterRatingsArray = [...sectionAnimesRecentsPosterRatings];
       const sectionAnimesRecentsDataTitlesArray = [...sectionAnimesRecentsDataTitles];
       
+      const animesURLExpression = /[\/]/g
       const anchors = sectionAnimesRecentsPosterArchorArray.map(archor => ({
         href: archor.href
       }));
+
+      const anchorsSerialized = anchors.map(url => {
+        const idAnimeSplit = url.href.split(animesURLExpression);
+        const idAnime = idAnimeSplit[4].trim();
+        
+        return({
+          idAnime
+        });
+      });
  
       const images = sectionAnimesRecentsPosterImgArray.map(img => ({
         src: img.src,
@@ -176,15 +204,15 @@ export class HomeAnimesWebsiteRequest {
         rating: rating.innerText
       }));
 
-      const titles = sectionAnimesRecentsDataTitlesArray.map(name => ({
-        title: name.innerText
+      const names = sectionAnimesRecentsDataTitlesArray.map(name => ({
+        name: name.innerText
       }));   
 
-      const animes = titles.map(({title}, index) => ({
-        title,
+      const animes = names.map(({name}, index) => ({
+        name,
         image: images[index].src,
         rating: ratings[index].rating,
-        url: anchors[index].href
+        idAnime: anchorsSerialized[index].idAnime
       }));
 
       console.log('Lista de animes >');

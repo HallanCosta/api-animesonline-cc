@@ -21,5 +21,6 @@ export class ListEpisodesAnimesWebsiteRequest {
 
   async request() {
     console.log('list episodes anime');
+
   }
 }
