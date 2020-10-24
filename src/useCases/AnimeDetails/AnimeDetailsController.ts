@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
-import { ListEpisodesAnimeUseCase } from './ListEpisodesAnimeUseCase';
+import { AnimeDetailsUseCase } from './AnimeDetailsUseCase';
 
-export class ListEpisodesAnimeController {
+export class AnimeDetailsController {
   constructor(
-    private listEpisodesAnimeUseCase: ListEpisodesAnimeUseCase
+    private animeDetailsUseCase: AnimeDetailsUseCase
   ) {}
 
   async handle(request: Request, response: Response) {
+    const { idAnime } = request.params;
 
     try {
-      await this.listEpisodesAnimeUseCase.execute();
+      await this.animeDetailsUseCase.execute({idAnime});
 
       return response.status(200).json({
         message: 'sucessf ListEpisodesAnimes'

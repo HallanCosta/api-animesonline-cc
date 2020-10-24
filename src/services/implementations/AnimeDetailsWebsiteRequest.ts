@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import path from 'path';
 
-export class ListEpisodesAnimesWebsiteRequest {
+export class AnimeDetailsWebsiteRequest {
   async config() {
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
