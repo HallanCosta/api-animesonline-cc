@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser, Page } from 'puppeteer';
 import path from 'path';
 import { TAnime, TEpisode } from '../IHomeWebsiteRequest';
 
@@ -22,9 +22,13 @@ export class HomeAnimesWebsiteRequest {
   }
 
   async request() {
-    const sectionAnimesRecents = await this.animesRecents();
-    const sectionLatestEpisodes = await this.latestEpisodes();
-    const sectionAnimesList = await  this.animesList();
+    const { browser, page } = await this.config();
+
+    const sectionAnimesRecents = await this.animesRecents(browser, page);
+    const sectionLatestEpisodes = await this.latestEpisodes(browser, page);
+    const sectionAnimesList = await this.animesList(browser, page);
+
+    await browser.close();
 
     return {
       sectionAnimesRecents,
@@ -33,10 +37,9 @@ export class HomeAnimesWebsiteRequest {
     }
   }
 
-  async animesRecents(): Promise<TAnime[]> {
-    const { browser, page  } = await this.config();
+  async animesRecents(browser: Browser, page: Page): Promise<TAnime[]> {
 
-    const animesRecentsData = await page.evaluate(() => {
+    const animesSerialized = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');
       
       const sectionAnimesRecentsPosterArchor: NodeListOf<HTMLAnchorElement> = sectionAnimes[0]
@@ -70,31 +73,27 @@ export class HomeAnimesWebsiteRequest {
         title: titleAnime.innerText
       }));
 
-      console.log('Animes Recentes >');
-      console.log('AnimesTitles: ', titles);
-      console.log('Images: ', images);
-      console.log('Ratings: ', ratings);
-      console.log('Url: ', anchors);
-
-      const anime = titles.map(({title}, index) => ({
+      const animes = titles.map(({title}, index) => ({
         title,  
         image: images[index].src,
         rating: ratings[index].rating,
         url: anchors[index].href
       }));
 
-      return anime;
+      console.log('Animes Recentes >');
+      console.log(animes);
+
+      return animes;
     });
 
-    await browser.close();
-
-    return animesRecentsData;
+    return animesSerialized;
+    // return animesRecentsData;
   }
 
-  async latestEpisodes(): Promise<TEpisode[]> {
-    const { browser, page } = await this.config();
+  async latestEpisodes(browser: Browser, page: Page): Promise<TEpisode[]> {
+    // const { browser, page } = await this.config();
 
-    const episodes = await page.evaluate(() => {
+    const episodesSerialized = await page.evaluate(() => {
       
       const sectionEpisodesRecentsPosterArchor: NodeListOf<HTMLAnchorElement> = document
         .querySelectorAll('#blog article .poster a');
@@ -127,32 +126,27 @@ export class HomeAnimesWebsiteRequest {
       const titles = sectionEpisodesRecentsEpisodesTitleArray.map(name => ({
         title: name.innerText
       }));
-
-      console.log('Últimos Episódios >');
-      console.log('EpisodesTitles: ', titles);
-      console.log('Thumvnails: ', thumbnails);
-      console.log('Subtitleds: ', subtitleds);
-      console.log('Url: ', anchors);
       
-      const episode = titles.map(({title}, index) => ({
+      const episodes = titles.map(({title}, index) => ({
         title: title,
         thumbnail: thumbnails[index].src,
         subtitled: subtitleds[index].subtitled,
         url: anchors[index].href
       }));
 
-      return episode;
-    }); 
+      console.log('Últimos Episódios >');
+      console.log(episodes);
 
-    await browser.close();
+      return episodes;
+    });
+    
 
-    return episodes;
+    return episodesSerialized;
   }
 
-  async animesList(): Promise<TAnime[]> {
-    const { browser, page } = await this.config();
+  async animesList(browser: Browser, page: Page): Promise<TAnime[]> {
 
-    const animes = await page.evaluate(() => {
+    const animesSerialized = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');
       
       const sectionAnimesRecentsPosterArchor: NodeListOf<HTMLAnchorElement> = sectionAnimes[1]
@@ -184,25 +178,21 @@ export class HomeAnimesWebsiteRequest {
 
       const titles = sectionAnimesRecentsDataTitlesArray.map(name => ({
         title: name.innerText
-      }));
+      }));   
 
-      console.log('AnimesTitles: ', titles);
-      console.log('Images: ', images);
-      console.log('Ratings: ', ratings);
-      console.log('Url: ', anchors);
-
-      const anime = titles.map(({title}, index) => ({
+      const animes = titles.map(({title}, index) => ({
         title,
         image: images[index].src,
         rating: ratings[index].rating,
         url: anchors[index].href
       }));
 
-      return anime;
+      console.log('Lista de animes >');
+      console.log(animes);
+
+      return animes;
     });
 
-    await browser.close();
-
-    return animes;
+    return animesSerialized;
   }
 }

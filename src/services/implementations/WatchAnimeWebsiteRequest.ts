@@ -1,9 +1,10 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser, Page } from 'puppeteer';
 import path from 'path';
 import { TAnimeEpisode } from '../IWatchAnimeWebsiteRequest';
 
 export class WatchAnimeWebsiteRequest {
-  async config(idEpisode: string) {
+
+  async request(idEpisode: string) {
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
       executablePath: path.join("/", "mnt", "c", "chrome-win", "chrome.exe"),
@@ -14,14 +15,14 @@ export class WatchAnimeWebsiteRequest {
 
     await page.goto(`https://animesonline.cc/episodio/${idEpisode}`);
 
-    return {
-      browser,
-      page
-    };
+    const watchAnime = await this.watchAnime(browser, page);
+
+    await browser.close();
+
+    return watchAnime;
   }
 
-  async request(idEpisode: string): Promise<TAnimeEpisode> {
-    const { browser, page } = await this.config(idEpisode);
+  async watchAnime(browser: Browser, page: Page): Promise<TAnimeEpisode> {
 
     const episode = await page.evaluate(async () => {
       //sem dublagem url: https://animesonline.cc/episodio/senyoku-no-sigrdrifa-episodio-2/
@@ -45,18 +46,21 @@ export class WatchAnimeWebsiteRequest {
           subtitled: animesURLDubbedSubtitled[0]
         }
       }
+
       const title = document.querySelector('.epih1')?.innerHTML;
       const description = document.querySelector('#info p')?.innerHTML;
       const { src: imageDescription } = document.querySelector('.imgep img') as HTMLImageElement;
       const { href: episodesAnimeURL } = document.querySelector('.areaserie a') as HTMLAnchorElement;
       const episodesAnimeURLText = document.querySelector('.areaserie a')?.innerHTML;
 
-      console.log('Animes URL: ', animesURL);
-      console.log('Anime Title: ', title);
-      console.log('Anime desctiption: ', description);
-      console.log('Imagem anime descrição:', imageDescription);
-      console.log('URL lista de episodios do anime: ', episodesAnimeURL);
-      console.log('URL lista de episodios do anime texto: ', episodesAnimeURLText);
+      console.log({
+        animesURL,
+        title,
+        description,
+        imageDescription,
+        episodesAnimeURL,
+        episodesAnimeURLText
+      });
 
       return {
         animesURL,
@@ -68,8 +72,6 @@ export class WatchAnimeWebsiteRequest {
       }
 
     });
-
-    await browser.close();
 
     return episode as TAnimeEpisode;
   }
