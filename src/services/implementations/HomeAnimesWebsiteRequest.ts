@@ -24,9 +24,9 @@ export class HomeAnimesWebsiteRequest {
   async request() {
     const { browser, page } = await this.config();
 
-    const sectionAnimesRecents = await this.animesRecents(browser, page);
-    const sectionLatestEpisodes = await this.latestEpisodes(browser, page);
-    const sectionAnimesList = await this.animesList(browser, page);
+    const sectionAnimesRecents = await this.animesRecents(page);
+    const sectionLatestEpisodes = await this.latestEpisodes(page);
+    const sectionAnimesList = await this.animesList(page);
 
     await browser.close();
 
@@ -37,7 +37,7 @@ export class HomeAnimesWebsiteRequest {
     }
   }
 
-  async animesRecents(browser: Browser, page: Page): Promise<TAnime[]> {
+  async animesRecents(page: Page): Promise<TAnime[]> {
 
     const animesSerialized = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');
@@ -99,8 +99,7 @@ export class HomeAnimesWebsiteRequest {
     return animesSerialized;
   }
 
-  async latestEpisodes(browser: Browser, page: Page): Promise<TEpisode[]> {
-    // const { browser, page } = await this.config();
+  async latestEpisodes(page: Page): Promise<TEpisode[]> {
 
     const episodesSerialized = await page.evaluate(() => {
       
@@ -162,7 +161,7 @@ export class HomeAnimesWebsiteRequest {
     return episodesSerialized;
   }
 
-  async animesList(browser: Browser, page: Page): Promise<TAnime[]> {
+  async animesList(page: Page): Promise<TAnime[]> {
 
     const animesSerialized = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');

@@ -1,12 +1,8 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
-import { TAnimeDetails } from '../IAnimeDetailsWebsiteRequest';
+import { TAnimeDetails, TSeasonEpisodesAnime } from '../IAnimeDetailsWebsiteRequest';
 
 export class AnimeDetailsWebsiteRequest {
-  async config() {
-    
-
-  }
 
   async request(idAnime: string) {
 
@@ -20,13 +16,16 @@ export class AnimeDetailsWebsiteRequest {
 
     await page.goto(`https://animesonline.cc/anime/${idAnime}`);
 
-    const animeDetails = await this.animeDetails(page);
-
+    // const animeDetails = await this.animeDetails(page);
+    const seasonsEpisodesAnime = await this.seasonsEpisodesAnime(page);
+    
     await browser.close();
 
-    return animeDetails;
+    // return animeDetails;
+    return seasonsEpisodesAnime;
   }
 
+  // PEGAR O ANO QUE FOI LANÇADO O ANIME
   async animeDetails(page: Page): Promise<TAnimeDetails> {
     const animeDetails = await page.evaluate(() => {
       const { innerText: name } = document.querySelector('.data h1') as HTMLElement;
@@ -64,4 +63,70 @@ export class AnimeDetailsWebsiteRequest {
 
     return animeDetails;
   }
+
+  async seasonsEpisodesAnime(page: Page): Promise<TSeasonEpisodesAnime[]> {
+
+    const seasonsEpisodesAnime = await page.evaluate(() => {
+
+      const seasonNodeList: NodeListOf<Element> = document
+        .querySelectorAll('div.se-c');
+
+      const seasonArray = [...seasonNodeList];
+
+      const seasonsEpisodes = seasonArray.map((season, index) => {
+        const numberSeason = season.children[0].children[0].innerHTML;
+
+        const episodesNodeList = seasonNodeList[index].children[1].children[0].children;
+        const episodesArray = [...episodesNodeList];
+
+        const datesReleaseNodeList = seasonNodeList[index].children[1].children[0].children;
+        const datesReleaseArray = [...datesReleaseNodeList];
+        
+
+        const episodes = episodesArray.map((episode) => {
+          const idEpisode = episode.children[0].children[0].attributes[0].nodeValue;
+          const image = episode.children[0].children[0].children[0].attributes[0].nodeValue;
+  
+          return ({
+            idEpisode,
+            image
+          });
+        });
+
+        const datesRelease = datesReleaseArray.map(dateRelease => {
+          const date = dateRelease.children[2].children[1].innerHTML;
+
+          return ({
+            date
+          });
+        });
+
+        const episodesAnime = episodes.map((episode, index) => {
+          const idEpisode = episode.idEpisode
+          const image = episode.image
+          const dateRelease = datesRelease[index].date
+
+          return ({
+            idEpisode,
+            image,
+            dateRelease
+          });
+        });
+
+        return {
+          numberSeason,
+          episodesAnime
+        };
+
+      });
+
+      console.log(seasonsEpisodes);
+
+      return seasonsEpisodes;
+
+    });
+
+    return seasonsEpisodesAnime as TSeasonEpisodesAnime[];
+  }
+
 }
