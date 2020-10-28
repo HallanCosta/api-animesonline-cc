@@ -1,6 +1,6 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
-import { TAnimeDetails, TSeasonEpisodesAnime } from '../IAnimeDetailsWebsiteRequest';
+import { TAnimeDetails, TAnimesRelated, TPopularAnimes, TSeasonEpisodesAnime } from '../IAnimeDetailsWebsiteRequest';
 
 export class AnimeDetailsWebsiteRequest {
 
@@ -17,15 +17,18 @@ export class AnimeDetailsWebsiteRequest {
     await page.goto(`https://animesonline.cc/anime/${idAnime}`);
 
     // const animeDetails = await this.animeDetails(page);
-    const seasonsEpisodesAnime = await this.seasonsEpisodesAnime(page);
+    // const seasonsEpisodesAnime = await this.seasonsEpisodesAnime(page);
+    // const animesRelated = await this.animesRelated(page);
+    const popularAnimes = await this.popularAnimes(page);
     
     await browser.close();
 
     // return animeDetails;
-    return seasonsEpisodesAnime;
+    // return seasonsEpisodesAnime;
+    // return animesRelated;
+    return popularAnimes;
   }
 
-  // PEGAR O ANO QUE FOI LANÇADO O ANIME
   async animeDetails(page: Page): Promise<TAnimeDetails> {
     const animeDetails = await page.evaluate(() => {
       const { innerText: name } = document.querySelector('.data h1') as HTMLElement;
@@ -82,9 +85,11 @@ export class AnimeDetailsWebsiteRequest {
         const datesReleaseNodeList = seasonNodeList[index].children[1].children[0].children;
         const datesReleaseArray = [...datesReleaseNodeList];
         
-
+        const episodesURLExpression = /[\/]/g
         const episodes = episodesArray.map((episode) => {
-          const idEpisode = episode.children[0].children[0].attributes[0].nodeValue;
+          const idEpisodeSplit = String(episode.children[0].children[0].attributes[0].nodeValue).split(episodesURLExpression);
+          const idEpisode = idEpisodeSplit[4].trim();
+
           const image = episode.children[0].children[0].children[0].attributes[0].nodeValue;
   
           return ({
@@ -128,5 +133,115 @@ export class AnimeDetailsWebsiteRequest {
 
     return seasonsEpisodesAnime as TSeasonEpisodesAnime[];
   }
+
+  async animesRelated(page: Page): Promise<TAnimesRelated[]> {
+    
+    const animesRelated = await page.evaluate(() => {
+      const anchorsNodeList: NodeListOf<HTMLAnchorElement> = document
+        .querySelectorAll('div.owl-item > article > a');
+
+      const imagesNodeList: NodeListOf<HTMLImageElement> = document
+        .querySelectorAll('div.owl-item > article > a > img');
+
+      const anchorsArray = [...anchorsNodeList];
+      const imagesArray = [...imagesNodeList];
+
+      const animesURLExpression = /[\/]/g
+      const idAnimes = anchorsArray.map(({ href: url }) => {
+        const idAnimeSplit = url.split(animesURLExpression);
+        const idAnime = idAnimeSplit[4].trim();
+
+        return ({
+          idAnime
+        });
+      });
+
+      const images = imagesArray.map(image => ({
+        image: image.src
+      }));
+
+      const names = imagesArray.map(image => ({
+        name: image.alt
+      }));
+
+      const animesRelated = idAnimes.map((anime, index) => ({
+        idAnime: anime.idAnime,
+        image: images[index].image,
+        name: names[index].name
+      }));
+
+      console.log(animesRelated);
+
+      return animesRelated;
+    });
+
+    return animesRelated
+  }
+
+  async popularAnimes(page: Page): Promise<TPopularAnimes[]> {
+    const popularAnimes = await page.evaluate(() => {
+      const anchorsNodeList: NodeListOf<HTMLAnchorElement> = document
+        .querySelectorAll('article.w_item_b > a');
+      const imagesNodeList: NodeListOf<HTMLImageElement> = document
+        .querySelectorAll('article.w_item_b > a > div.image > img');
+      
+        const namesNodeList: NodeListOf<HTMLElement> = document
+        .querySelectorAll('article.w_item_b > a > div.data > h3');
+      
+      const datesNodeList: NodeListOf<HTMLSpanElement> = document
+        .querySelectorAll('article.w_item_b > a > div.data > span.wdate');
+      
+      const ratingsNodeList: NodeListOf<HTMLElement> = document
+        .querySelectorAll('article.w_item_b > a > div.data > span.wextra > b');
+    
+      const anchorsArray = [...anchorsNodeList];
+      const imagesArray = [...imagesNodeList];
+      const namesArray = [...namesNodeList];
+      const datesArray = [...datesNodeList];
+      const ratingsArray = [...ratingsNodeList];
+
+      const animesURLExpression = /[\/]/g
+      const idAnimes = anchorsArray.map(({ href: url }) => {
+        const idAnimeSplit = url.split(animesURLExpression);
+        const idAnime = idAnimeSplit[4].trim();
+
+        return ({
+          idAnime
+        });
+      });
+
+      const images = imagesArray.map(({ src: image }) => ({
+        image
+      }));
+
+      const names = namesArray.map(({ innerText: name }) => ({
+        name
+      }));
+
+      const dates = datesArray.map(({ innerText: date }) => ({
+        date
+      }));
+
+      const ratings = ratingsArray.map(({ innerText: rating }) => ({
+        rating
+      }));
+
+      const popularAnimes = idAnimes.map((anime, index) => ({
+        idAnime: anime.idAnime,
+        image: images[index].image,
+        name: names[index].name,
+        date: dates[index].date,
+        rating: ratings[index].rating
+      }));
+
+      console.log(popularAnimes);
+
+      return popularAnimes;
+    });
+
+    return popularAnimes;
+  }
+
+  
 
 }
