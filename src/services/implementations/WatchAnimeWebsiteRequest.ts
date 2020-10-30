@@ -53,24 +53,19 @@ export class WatchAnimeWebsiteRequest {
       const { href: episodesAnimeURL } = document.querySelector('.areaserie a') as HTMLAnchorElement;
       const episodesAnimeURLText = document.querySelector('.areaserie a')?.innerHTML;
 
-      console.log({
+
+      const episode = {
         animesURL,
         title,
         description,
         imageDescription,
-        episodesAnimeURL,
-        episodesAnimeURLText
-      });
+        episodesAnimeURLText,
+        episodesAnimeURL
+      };
 
-      return {
-        animesURL,
-        title,
-        description,
-        imageDescription,
-        episodesAnimeURL,
-        episodesAnimeURLText
-      }
+      console.log(episode);
 
+      return episode;
     });
 
     return episode as TAnimeEpisode;

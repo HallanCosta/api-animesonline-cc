@@ -1,10 +1,10 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
-import { TAnimeDetails, TAnimesRelated, TPopularAnimes, TSeasonEpisodesAnime } from '../IAnimeDetailsWebsiteRequest';
+import { TAnimeDetails, TAnimesRelated, TPopularAnimes, TRequestAnimeDetails, TSeasonsEpisodesAnime } from '../IAnimeDetailsWebsiteRequest';
 
 export class AnimeDetailsWebsiteRequest {
 
-  async request(idAnime: string) {
+  async request(idAnime: string): Promise<TRequestAnimeDetails> {
 
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
@@ -16,17 +16,21 @@ export class AnimeDetailsWebsiteRequest {
 
     await page.goto(`https://animesonline.cc/anime/${idAnime}`);
 
-    // const animeDetails = await this.animeDetails(page);
-    // const seasonsEpisodesAnime = await this.seasonsEpisodesAnime(page);
-    // const animesRelated = await this.animesRelated(page);
+    const animeDetails = await this.animeDetails(page);
+    const seasonsEpisodesAnime = await this.seasonsEpisodesAnime(page);
+    const animesRelated = await this.animesRelated(page);
     const popularAnimes = await this.popularAnimes(page);
     
     await browser.close();
 
-    // return animeDetails;
-    // return seasonsEpisodesAnime;
-    // return animesRelated;
-    return popularAnimes;
+    const anime = {
+      animeDetails,
+      seasonsEpisodesAnime,
+      animesRelated,
+      popularAnimes
+    };
+
+    return anime;
   }
 
   async animeDetails(page: Page): Promise<TAnimeDetails> {
@@ -59,6 +63,7 @@ export class AnimeDetailsWebsiteRequest {
         titleListEpisodes
       };
 
+      console.log('Anime Details >');
       console.log(animeDetails);
 
       return animeDetails;
@@ -67,7 +72,7 @@ export class AnimeDetailsWebsiteRequest {
     return animeDetails;
   }
 
-  async seasonsEpisodesAnime(page: Page): Promise<TSeasonEpisodesAnime[]> {
+  async seasonsEpisodesAnime(page: Page): Promise<TSeasonsEpisodesAnime[]> {
 
     const seasonsEpisodesAnime = await page.evaluate(() => {
 
@@ -125,13 +130,14 @@ export class AnimeDetailsWebsiteRequest {
 
       });
 
+      console.log('Seasons Episodes >');
       console.log(seasonsEpisodes);
 
       return seasonsEpisodes;
 
     });
 
-    return seasonsEpisodesAnime as TSeasonEpisodesAnime[];
+    return seasonsEpisodesAnime as TSeasonsEpisodesAnime[];
   }
 
   async animesRelated(page: Page): Promise<TAnimesRelated[]> {
@@ -170,6 +176,7 @@ export class AnimeDetailsWebsiteRequest {
         name: names[index].name
       }));
 
+      console.log('Animes Related >');
       console.log(animesRelated);
 
       return animesRelated;
@@ -234,6 +241,7 @@ export class AnimeDetailsWebsiteRequest {
         rating: ratings[index].rating
       }));
 
+      console.log('Popuplar Animes >');
       console.log(popularAnimes);
 
       return popularAnimes;

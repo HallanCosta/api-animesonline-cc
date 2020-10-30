@@ -17,7 +17,7 @@ type TEpisodesAnime = {
   image: string;
   dateRelease: string;
 }
-export type TSeasonEpisodesAnime = {
+export type TSeasonsEpisodesAnime = {
   numberSeason: string;
   episodesAnime: TEpisodesAnime[];
 }
@@ -36,9 +36,13 @@ export type TPopularAnimes = {
   rating: string;
 }
 
+export type TRequestAnimeDetails = {
+  animeDetails: TAnimeDetails;
+  seasonsEpisodesAnime: TSeasonsEpisodesAnime[];
+  animesRelated: TAnimesRelated[];
+  popularAnimes: TPopularAnimes[];
+}
+
 export interface IAnimeDetailsWebsiteRequest {
-  // request(idAnime: string): Promise<TAnimeDetails[]>;
-  // request(idAnime: string): Promise<TSeasonEpisodesAnime[]>;
-  // request(idAnime: string): Promise<TAnimesRelated[]>;
-  request(idAnime: string): Promise<TPopularAnimes[]>;
+  request(idAnime: string): Promise<TRequestAnimeDetails>;
 }
