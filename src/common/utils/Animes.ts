@@ -6,10 +6,12 @@ export class Animes {
       const anchorsNodeList: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('article > div.poster > a');
       const imagesNodeList: NodeListOf<HTMLImageElement> = document.querySelectorAll('article > div.poster > a > img');
       const ratingsNodeList: NodeListOf<HTMLElement> = document.querySelectorAll('article > div.poster > div.rating');
- 
+      const namesNodeList: NodeListOf<HTMLElement> = document.querySelectorAll('article > div.data > h3');
+
       const anchorsArray = [...anchorsNodeList];
       const imagesArray = [...imagesNodeList];
       const ratingsArray = [...ratingsNodeList];
+      const namesArray = [...namesNodeList];
 
       const animesURLExpression = /[\/]/g
       const idAnimes = anchorsArray.map(({ href: url  }) => {
@@ -29,8 +31,13 @@ export class Animes {
         rating: rating.innerText
       }));
 
+      const names = namesArray.map(name => ({
+        name: name.innerText
+      }));
+
       const animes = idAnimes.map((idAnime, index) => ({
         idAnime: idAnimes[index].idAnime,
+        name: names[index].name,
         image: images[index].image,
         rating: ratings[index].rating
       })); 
