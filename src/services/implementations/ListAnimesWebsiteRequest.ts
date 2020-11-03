@@ -1,5 +1,6 @@
-import puppeteer, { Page } from 'puppeteer';
+import puppeteer from 'puppeteer';
 import path from 'path';
+
 import { Animes } from '../../common/utils/Animes';
 
 export class ListAnimesWebsiteRequest {

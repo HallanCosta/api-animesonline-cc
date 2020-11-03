@@ -1,8 +1,4 @@
-type TAnime = {
-  idAnime: string;
-  image: string;
-  rating: string;
-}
+import { TAnime } from '../common/utils/TAnimes';
 
 export type TAnimesFinded = {
   search: string;
