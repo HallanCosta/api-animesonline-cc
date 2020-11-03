@@ -4,6 +4,7 @@ import { homeController } from './useCases/Home';
 import { watchAnimeController } from './useCases/WatchAnime';
 import { animeDetailsController } from './useCases/AnimeDetails';
 import { findAnimeNameLikeController } from './useCases/FindAnimeNameLike';
+import { listAnimesController } from './useCases/ListAnimes';
 
 const routes = express.Router();
 
@@ -22,5 +23,10 @@ routes.get('/anime/:idAnime', (request, response) => {
 routes.get('/search/:name', (request, response) => {
   return findAnimeNameLikeController.handle(request, response);
 });
+
+routes.get('/anime/', (request, response) => {
+  return listAnimesController.handle(request, response);
+});
+
 
 export { routes };

@@ -7,6 +7,7 @@ type TAnime = {
 export type TAnimesFinded = {
   search: string;
   animesFinded: TAnime[];
+  totalPage: string;
 }
 
 export interface IFindAnimeNameLikeWebsiteRequest {
