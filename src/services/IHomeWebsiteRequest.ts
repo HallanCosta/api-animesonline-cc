@@ -1,11 +1,11 @@
-export type TAnime = {
+export type THomeAnime = {
   name: string;
   image: string,
   rating: string,
   idAnime: string
 }
 
-export type TEpisode = {
+export type THomeEpisode = {
   name: string;
   thumbnail: string,
   subtitled: string,

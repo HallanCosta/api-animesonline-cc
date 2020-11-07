@@ -1,10 +1,10 @@
-import puppeteer, { Browser, Page } from 'puppeteer';
+import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
-import { TAnime, TEpisode } from '../IHomeWebsiteRequest';
+import { THomeAnime, THomeEpisode } from '../IHomeWebsiteRequest';
 
 export class HomeAnimesWebsiteRequest {
 
-  async config() {
+  async request() {
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
       executablePath: path.join("/", "mnt", "c", "chrome-win", "chrome.exe"),
@@ -14,15 +14,6 @@ export class HomeAnimesWebsiteRequest {
     const page = await browser.newPage();
 
     await page.goto('https://animesonline.cc/tv/');
-
-    return {
-      browser,
-      page
-    };
-  }
-
-  async request() {
-    const { browser, page } = await this.config();
 
     const sectionAnimesRecents = await this.animesRecents(page);
     const sectionLatestEpisodes = await this.latestEpisodes(page);
@@ -37,7 +28,7 @@ export class HomeAnimesWebsiteRequest {
     }
   }
 
-  async animesRecents(page: Page): Promise<TAnime[]> {
+  async animesRecents(page: Page): Promise<THomeAnime[]> {
 
     const animesSerialized = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');
@@ -84,10 +75,10 @@ export class HomeAnimesWebsiteRequest {
       }));
 
       const animes = names.map(({name}, index) => ({
+        idAnime: anchorsSerialized[index].idAnime,
         name,  
         image: images[index].src,
-        rating: ratings[index].rating,
-        idAnime: anchorsSerialized[index].idAnime
+        rating: ratings[index].rating
       }));
 
       console.log('Animes Recentes >');
@@ -99,7 +90,7 @@ export class HomeAnimesWebsiteRequest {
     return animesSerialized;
   }
 
-  async latestEpisodes(page: Page): Promise<TEpisode[]> {
+  async latestEpisodes(page: Page): Promise<THomeEpisode[]> {
 
     const episodesSerialized = await page.evaluate(() => {
       
@@ -161,7 +152,7 @@ export class HomeAnimesWebsiteRequest {
     return episodesSerialized;
   }
 
-  async animesList(page: Page): Promise<TAnime[]> {
+  async animesList(page: Page): Promise<THomeAnime[]> {
 
     const animesSerialized = await page.evaluate(() => {
       const sectionAnimes = document.querySelectorAll('.owl-wrapper');
