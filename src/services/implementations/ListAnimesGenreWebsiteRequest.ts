@@ -1,5 +1,6 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
+import { Animes } from '../../common/utils/Animes';
 
 export class ListAnimesGenreWebsiteRequest {
   async request(idGenre: string) {
@@ -13,17 +14,27 @@ export class ListAnimesGenreWebsiteRequest {
 
     await page.goto(`https://animesonline.cc/genero/${idGenre}`);
 
-    const animesGenre = await this.listAnimesGenre(page);
+    const animes = new Animes;
+    const title = await this.title(page);
+    const listAnimesGenre = await animes.listAnimes(page);
+    const totalPage = await animes.totalPage(page);
     
     await browser.close();
 
-    return animesGenre;
+    return {
+      title,
+      listAnimesGenre,
+      totalPage
+    };
   }
 
-  async listAnimesGenre(page: Page) {
+  async title(page: Page) {
     const animesGenre = await page.evaluate(() => {
-      console.log('List animes per genre');
+      const { innerText: title } = document.querySelector('header > h1') as HTMLElement;
 
+      console.log(title);
+
+      return title;
     }); 
 
     return animesGenre;
