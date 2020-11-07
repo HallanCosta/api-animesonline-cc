@@ -1,8 +1,9 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
+import { TGenre } from '../IGenresWebsiteRequest';
 
 export class GenresWebsiteRequest {
-  async request() {
+  async request(): Promise<TGenre[]> {
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
       executablePath: path.join("/", "mnt", "c", "chrome-win", "chrome.exe"),
@@ -17,7 +18,7 @@ export class GenresWebsiteRequest {
 
     await browser.close();
 
-    return {};
+    return genres;
   }
 
   async listGenres(page: Page) {
