@@ -6,6 +6,7 @@ import { animeDetailsController } from './useCases/AnimeDetails';
 import { findAnimeNameLikeController } from './useCases/FindAnimeNameLike';
 import { listAnimesController } from './useCases/ListAnimes';
 import { genresController } from './useCases/Genres';
+import { listAnimesGenreController } from './useCases/ListAnimesGenre';
 
 const routes = express.Router();
 
@@ -29,9 +30,12 @@ routes.get('/anime/', (request, response) => {
   return listAnimesController.handle(request, response);
 });
 
-
 routes.get('/genres/', (request, response) => {
   return genresController.handle(request, response);
+});
+
+routes.get('/genres/:idGenre', (request, response) => {
+  return listAnimesGenreController.handle(request, response);
 });
 
 
