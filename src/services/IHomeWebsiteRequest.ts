@@ -1,17 +1,23 @@
 export type THomeAnime = {
+  idAnime: string;
   name: string;
-  image: string,
-  rating: string,
-  idAnime: string
+  image: string;
+  rating: string;
 }
 
 export type THomeEpisode = {
+  idEpisode: string;
   name: string;
-  thumbnail: string,
-  subtitled: string,
-  idEpisode: string
+  thumbnail: string;
+  subtitled: string;
+}
+
+export type TRequestHome = {
+  sectionAnimesRecents: THomeAnime[];
+  sectionLatestEpisodes: THomeEpisode[];
+  sectionAnimesList: THomeAnime[];
 }
 
 export interface IHomeWebsiteRequest {
-  request(): Promise<void>;
+  request(): Promise<TRequestHome>;
 }

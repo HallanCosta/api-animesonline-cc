@@ -1,10 +1,10 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
-import { THomeAnime, THomeEpisode } from '../IHomeWebsiteRequest';
+import { THomeAnime, THomeEpisode, TRequestHome } from '../IHomeWebsiteRequest';
 
 export class HomeAnimesWebsiteRequest {
 
-  async request() {
+  async request(): Promise<TRequestHome> {
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
       executablePath: path.join("/", "mnt", "c", "chrome-win", "chrome.exe"),

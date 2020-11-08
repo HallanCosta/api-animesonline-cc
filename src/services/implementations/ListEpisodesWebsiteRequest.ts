@@ -1,8 +1,11 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
 
+import { Episodes } from '../../common/utils/Episodes';
+import { TRequest } from '../IListEpisodesWebsiteRequest';
+
 export class ListEpisodesWebsiteRequest {
-  async request() {
+  async request(): Promise<TRequest> {
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
       executablePath: path.join("/", "mnt", "c", "chrome-win", "chrome.exe"),
@@ -13,18 +16,15 @@ export class ListEpisodesWebsiteRequest {
 
     await page.goto(`https://animesonline.cc/episodio/`);
     
-    const listEpisodes = await this.listEpisodes(page);
+    const episodes = new Episodes;
+    const listEpisodes = await episodes.listEpisodes(page);
+    const totalPage = await episodes.totalPage(page);
     
     await browser.close();
 
-    return listEpisodes;
-  }
-
-  async listEpisodes(page: Page) {
-    const listEpisodes = await page.evaluate(() => {
-      console.log('listEpisodes');
-    });
-
-    return listEpisodes;
+    return {
+      listEpisodes,
+      totalPage
+    };
   }
 }

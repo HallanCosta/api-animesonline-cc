@@ -8,7 +8,7 @@ export class ListEpisodesController {
 
   async handle(request: Request, response: Response) {
     try {
-      const episodes = this.listEpisodesUseCase.execute();
+      const episodes = await this.listEpisodesUseCase.execute();
 
       return response.status(200).json(episodes);
     } catch (err) {
