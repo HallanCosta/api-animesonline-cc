@@ -31,7 +31,7 @@ export class ListAnimesGenreWebsiteRequest {
   async title(page: Page) {
     const animesGenre = await page.evaluate(() => {
       const { innerText: title } = document.querySelector('header > h1') as HTMLElement;
-
+      
       console.log(title);
 
       return title;

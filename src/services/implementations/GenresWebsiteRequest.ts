@@ -38,7 +38,16 @@ export class GenresWebsiteRequest {
         });
       });
 
-      console.log(genres);
+      genres.push(
+        {
+          idGenre: 'dublado',
+          name: 'Dublado'
+        },
+        {
+          idGenre: 'legendado',
+          name: 'Legendado'
+        }
+      );
 
       return genres;
     });
