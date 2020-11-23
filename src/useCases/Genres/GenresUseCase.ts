@@ -1,12 +1,12 @@
-import { IGenresWebsiteRequest } from "../../services/IGenresWebsiteRequest";
+import { IGenresRequest } from "../../services/IGenres";
 
 export class GenresUseCase { 
   constructor(
-    private genresWebsiteRequest: IGenresWebsiteRequest
+    private genresRequest: IGenresRequest
   ) {}
 
   async execute() {
-    const genres = await this.genresWebsiteRequest.request();
+    const genres = await this.genresRequest.request();
 
     return genres;
   }

@@ -1,11 +1,11 @@
 import { HomeUseCase } from './HomeUseCase';
 import { HomeController } from './HomeController';
-import { HomeAnimesWebsiteRequest } from '../../services/implementations/HomeAnimesWebsiteRequest';
+import { Home } from '../../services/implementations/Home';
 
-const homeAnimesWebsiteRequest = new HomeAnimesWebsiteRequest;
+const home = new Home;
 
 const homeUseCase = new HomeUseCase(
-  homeAnimesWebsiteRequest
+  home
 );
 
 const homeController = new HomeController(

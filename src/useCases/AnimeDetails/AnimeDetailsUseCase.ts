@@ -1,9 +1,9 @@
-import { IAnimeDetailsWebsiteRequest } from '../../services/IAnimeDetailsWebsiteRequest';
+import { IAnimeDetails } from '../../services/IAnimeDetails';
 import { AnimeDetailsRequestDTO } from './AnimeDetailsDTO';
 
 export class AnimeDetailsUseCase {
   constructor(
-    private animeDetails: IAnimeDetailsWebsiteRequest
+    private animeDetails: IAnimeDetails
   ) {}
 
   async execute(data: AnimeDetailsRequestDTO) {

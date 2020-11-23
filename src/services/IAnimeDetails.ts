@@ -43,6 +43,6 @@ export type TRequestAnimeDetails = {
   popularAnimes: TPopularAnimes[];
 }
 
-export interface IAnimeDetailsWebsiteRequest {
+export interface IAnimeDetails {
   request(idAnime: string): Promise<TRequestAnimeDetails>;
 }

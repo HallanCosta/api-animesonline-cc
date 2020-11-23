@@ -3,6 +3,6 @@ export type TGenre = {
   name: string;
 }
 
-export interface IGenresWebsiteRequest {
+export interface IGenresRequest {
   request(): Promise<TGenre[]>;
 }

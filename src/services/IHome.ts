@@ -18,6 +18,6 @@ export type TRequestHome = {
   sectionAnimesList: THomeAnime[];
 }
 
-export interface IHomeWebsiteRequest {
+export interface IHome {
   request(): Promise<TRequestHome>;
 }

@@ -1,11 +1,11 @@
 import { GenresController } from './GenresController';
 import { GenresUseCase } from './GenresUseCase';
-import { GenresWebsiteRequest } from '../../services/implementations/GenresWebsiteRequest';
+import { Genres } from '../../services/implementations/Genres';
 
-const genresWebsiteRequest = new GenresWebsiteRequest;
+const genres = new Genres;
 
 export const genresUseCase = new GenresUseCase(
-  genresWebsiteRequest
+  genres
 );
 
 export const genresController = new GenresController(

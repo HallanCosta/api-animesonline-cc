@@ -1,9 +1,9 @@
 import puppeteer, { Page } from 'puppeteer';
-import path from 'path';
+
 import { TGenre } from '../IGenresWebsiteRequest';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
-export class GenresWebsiteRequest {
+export class Genres {
   async request(): Promise<TGenre[]> {
     const browser = await puppeteer.launch(launchConfig);
 

@@ -1,11 +1,11 @@
 import { AnimeDetailsUseCase } from './AnimeDetailsUseCase';
 import { AnimeDetailsController } from './AnimeDetailsController';
-import { AnimeDetailsWebsiteRequest } from '../../services/implementations/AnimeDetailsWebsiteRequest';
+import { AnimeDetails } from '../../services/implementations/AnimeDetails';
 
-const animeDetailsWebsiteRequest = new AnimeDetailsWebsiteRequest;
+const animeDetails = new AnimeDetails;
 
 export const animeDetailsUseCase = new AnimeDetailsUseCase(
-  animeDetailsWebsiteRequest
+  animeDetails
 );
 
 export const animeDetailsController = new AnimeDetailsController(

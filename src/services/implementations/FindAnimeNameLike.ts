@@ -1,10 +1,10 @@
 import puppeteer, { Page } from 'puppeteer';
 
-import { TAnimesFinded } from '../IFindAnimeNameLikeWebsiteRequest';
+import { TAnimesFinded } from '../IFindAnimeNameLike';
 import { Animes } from '../../common/utils/Animes/Animes';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
-export class FindAnimeNameLikeWebsiteRequest {
+export class FindAnimeNameLike {
   async request(name: string): Promise<TAnimesFinded> {
     const browser = await puppeteer.launch(launchConfig);
 

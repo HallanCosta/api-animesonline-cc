@@ -1,9 +1,9 @@
 import puppeteer, { Page } from 'puppeteer';
 
-import { TAnimeDetails, TAnimesRelated, TPopularAnimes, TRequestAnimeDetails, TSeasonsEpisodesAnime } from '../IAnimeDetailsWebsiteRequest';
+import { TAnimeDetails, TAnimesRelated, TPopularAnimes, TRequestAnimeDetails, TSeasonsEpisodesAnime } from '../IAnimeDetails';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
-export class AnimeDetailsWebsiteRequest {
+export class AnimeDetails {
 
   async request(idAnime: string): Promise<TRequestAnimeDetails> {
     const browser = await puppeteer.launch(launchConfig);

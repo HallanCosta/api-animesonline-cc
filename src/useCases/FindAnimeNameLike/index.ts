@@ -1,11 +1,11 @@
 import { FindAnimeNameLikeController } from './FindAnimeNameLikeController';
 import { FindAnimeNameLikeUseCase } from './FindAnimeNameLikeUseCase';
-import { FindAnimeNameLikeWebsiteRequest } from '../../services/implementations/FindAnimeNameLikeWebsiteRequest';
+import { FindAnimeNameLike } from '../../services/implementations/FindAnimeNameLike';
 
-const findAnimeNameLikeWebsiteRequest = new FindAnimeNameLikeWebsiteRequest;
+const findAnimeNameLike = new FindAnimeNameLike;
 
 export const findAnimeNameLikeUseCase = new FindAnimeNameLikeUseCase(
-  findAnimeNameLikeWebsiteRequest
+  findAnimeNameLike
 );
 
 export const findAnimeNameLikeController = new FindAnimeNameLikeController(

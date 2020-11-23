@@ -1,9 +1,9 @@
 import puppeteer, { Page } from 'puppeteer';
 
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
-import { THomeAnime, THomeEpisode, TRequestHome } from '../IHomeWebsiteRequest';
+import { THomeAnime, THomeEpisode, TRequestHome } from '../IHome';
 
-export class HomeAnimesWebsiteRequest {
+export class Home {
 
   async request(): Promise<TRequestHome> {
     const browser = await puppeteer.launch(launchConfig);

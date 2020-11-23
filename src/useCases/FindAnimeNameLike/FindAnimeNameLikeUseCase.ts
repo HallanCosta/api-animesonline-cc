@@ -1,13 +1,13 @@
 import { FindAnimeNameLikeRequestDTO } from "./FindAnimeNameLikeDTO";
-import { IFindAnimeNameLikeWebsiteRequest  } from '../../services/IFindAnimeNameLikeWebsiteRequest';
+import { IFindAnimeNameLike  } from '../../services/IFindAnimeNameLike';
 
 export class FindAnimeNameLikeUseCase {
   constructor(
-    private findAnimeNameLikeWebsiteRequest: IFindAnimeNameLikeWebsiteRequest
+    private findAnimeNameLike: IFindAnimeNameLike
   ) {}
 
   async execute(data: FindAnimeNameLikeRequestDTO) {
-    const findAnimes = await this.findAnimeNameLikeWebsiteRequest.request(data.name);
+    const findAnimes = await this.findAnimeNameLike.request(data.name);
 
     if (findAnimes.animesFinded[0]) {
       return findAnimes;

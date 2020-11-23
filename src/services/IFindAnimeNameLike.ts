@@ -1,4 +1,4 @@
-import { TAnime } from '../common/utils/TAnimes';
+import { TAnime } from '../common/utils/Animes/TAnimes';
 
 export type TAnimesFinded = {
   search: string;
@@ -6,6 +6,6 @@ export type TAnimesFinded = {
   totalPage: string;
 }
 
-export interface IFindAnimeNameLikeWebsiteRequest {
+export interface IFindAnimeNameLike {
   request(name: string): Promise<TAnimesFinded>;
 }

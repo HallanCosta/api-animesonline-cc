@@ -1,9 +1,9 @@
 import { HomeRequestDTO } from './HomeDTO';
-import { IHomeWebsiteRequest } from '../../services/IHomeWebsiteRequest';
+import { IHome } from '../../services/IHome';
 
 export class HomeUseCase {
   constructor(
-    private home: IHomeWebsiteRequest
+    private home: IHome
   ) {}
 
   async execute() {
