@@ -26,12 +26,14 @@ routes.get('/anime/:idAnime', (request, response) => {
 routes.get('/search/:name', (request, response) => {
   return findAnimeNameLikeController.handle(request, response);
 });
-
 routes.get('/search/:name/page/:currentPage', (request, response) => {
   return findAnimeNameLikeController.handle(request, response);
 });
 
 routes.get('/anime/', (request, response) => {
+  return listAnimesController.handle(request, response);
+});
+routes.get('/anime/page/:currentPage', (request, response) => {
   return listAnimesController.handle(request, response);
 });
 
@@ -40,6 +42,9 @@ routes.get('/genres/', (request, response) => {
 });
 
 routes.get('/genres/:idGenre', (request, response) => {
+  return listAnimesGenreController.handle(request, response);
+});
+routes.get('/genres/:idGenre/page/:currentPage', (request, response) => {
   return listAnimesGenreController.handle(request, response);
 });
 

@@ -1,1 +1,3 @@
-export type TListAnimesRequestDTO = {};
+export type TListAnimesRequestDTO = {
+  currentPage?: string;
+};

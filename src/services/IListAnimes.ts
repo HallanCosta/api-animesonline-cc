@@ -6,5 +6,5 @@ type TListAnimes = {
 }
 
 export interface IListAnimes {
-  request(): Promise<TListAnimes>;
+  request(currentPage?: string): Promise<TListAnimes>;
 }

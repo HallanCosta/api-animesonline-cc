@@ -4,13 +4,17 @@ import { Animes } from '../../common/utils/Animes/Animes';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
 export class ListAnimesGenre {
-  async request(idGenre: string) {
+  async request(idGenre: string, currentPage?: string) {
     const browser = await puppeteer.launch(launchConfig);
 
     const page = await browser.newPage();
 
-    await page.goto(`https://animesonline.cc/genero/${idGenre}`);
-
+    if (currentPage) {
+      await page.goto(`https://animesonline.cc/genero/${idGenre}/page/${currentPage}`);
+    } else {
+      await page.goto(`https://animesonline.cc/genero/${idGenre}`);
+    }
+    
     const animes = new Animes;
     const title = await this.title(page);
     const listAnimesGenre = await animes.listAnimes(page);

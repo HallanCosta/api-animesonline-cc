@@ -7,10 +7,10 @@ export class ListAnimesGenreController {
   ) {}
 
   async handle(request: Request, response: Response) {
-    const { idGenre } = request.params;
+    const { idGenre, currentPage } = request.params;
 
     try {
-      const animesGenre = await this.listAnimesGenreUseCase.execute({ idGenre });
+      const animesGenre = await this.listAnimesGenreUseCase.execute({ idGenre, currentPage });
       
       return response.status(200).json(animesGenre);
     } catch (err) {

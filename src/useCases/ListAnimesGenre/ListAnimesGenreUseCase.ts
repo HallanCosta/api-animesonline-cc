@@ -7,7 +7,7 @@ export class ListAnimesGenreUseCase {
   ) {}
 
   async execute(data: ListAnimesGenreRequestDTO) {
-    const animesGenre = await this.listAnimesGenre.request(data.idGenre);
+    const animesGenre = await this.listAnimesGenre.request(data.idGenre, data.currentPage);
 
     return animesGenre;
   }
