@@ -5,12 +5,16 @@ import { Animes } from '../../common/utils/Animes/Animes';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
 export class FindAnimeNameLike {
-  async request(name: string): Promise<TAnimesFinded> {
+  async request(name: string, currentPage?: string): Promise<TAnimesFinded> {
     const browser = await puppeteer.launch(launchConfig);
 
     const page = await browser.newPage();
 
-    await page.goto(`https://animesonline.cc/search/${name}`);
+    if (currentPage) {
+      await page.goto(`https://animesonline.cc/search/${name}/page/${currentPage}`);
+    } else {
+      await page.goto(`https://animesonline.cc/search/${name}/`);
+    }
 
     const search = await this.WhatWasSearch(page);
 

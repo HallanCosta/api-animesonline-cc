@@ -27,6 +27,10 @@ routes.get('/search/:name', (request, response) => {
   return findAnimeNameLikeController.handle(request, response);
 });
 
+routes.get('/search/:name/page/:currentPage', (request, response) => {
+  return findAnimeNameLikeController.handle(request, response);
+});
+
 routes.get('/anime/', (request, response) => {
   return listAnimesController.handle(request, response);
 });

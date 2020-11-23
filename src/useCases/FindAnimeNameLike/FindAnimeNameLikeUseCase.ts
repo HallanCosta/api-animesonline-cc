@@ -7,7 +7,7 @@ export class FindAnimeNameLikeUseCase {
   ) {}
 
   async execute(data: FindAnimeNameLikeRequestDTO) {
-    const findAnimes = await this.findAnimeNameLike.request(data.name);
+    const findAnimes = await this.findAnimeNameLike.request(data.name, data.currentPage);
 
     if (findAnimes.animesFinded[0]) {
       return findAnimes;

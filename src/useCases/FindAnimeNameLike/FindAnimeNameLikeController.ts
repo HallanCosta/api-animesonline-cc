@@ -7,10 +7,10 @@ export class FindAnimeNameLikeController {
   ) {}
 
   async handle(request: Request, response: Response) {
-    const { name } = request.params;
+    const { name, currentPage } = request.params;
 
     try {
-      const findAnimes = await this.findAnimeNameLikeUseCase.execute({name});
+      const findAnimes = await this.findAnimeNameLikeUseCase.execute({ name, currentPage });
       
       return response.status(200).json(findAnimes);
     } catch (err) {

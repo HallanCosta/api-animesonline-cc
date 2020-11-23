@@ -7,5 +7,5 @@ export type TAnimesFinded = {
 }
 
 export interface IFindAnimeNameLike {
-  request(name: string): Promise<TAnimesFinded>;
+  request(name: string, currentPage?: string): Promise<TAnimesFinded>;
 }
