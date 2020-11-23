@@ -1,9 +1,9 @@
-import { IListAnimesGenreWebsiteRequest } from '../../services/IListAnimesGenreWebsiteRequest';
+import { IListAnimesGenre } from '../../services/IListAnimesGenre';
 import { ListAnimesGenreRequestDTO } from './ListAnimesGenreDTO';
 
 export class ListAnimesGenreUseCase {
   constructor(
-    private listAnimesGenre: IListAnimesGenreWebsiteRequest
+    private listAnimesGenre: IListAnimesGenre
   ) {}
 
   async execute(data: ListAnimesGenreRequestDTO) {

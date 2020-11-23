@@ -3,7 +3,7 @@ import puppeteer, { Page } from 'puppeteer';
 import { Animes } from '../../common/utils/Animes/Animes';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
-export class ListAnimesGenreWebsiteRequest {
+export class ListAnimesGenre {
   async request(idGenre: string) {
     const browser = await puppeteer.launch(launchConfig);
 

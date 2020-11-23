@@ -1,11 +1,11 @@
 import { ListAnimesGenreController } from './ListAnimesGenreController';
 import { ListAnimesGenreUseCase } from './ListAnimesGenreUseCase';
-import { ListAnimesGenreWebsiteRequest } from '../../services/implementations/ListAnimesGenreWebsiteRequest';
+import { ListAnimesGenre } from '../../services/implementations/ListAnimesGenre';
 
-const listAnimesGenreWebsiteRequest = new ListAnimesGenreWebsiteRequest;
+const listAnimesGenre = new ListAnimesGenre;
 
 export const listAnimesGenreUseCase = new ListAnimesGenreUseCase(
-  listAnimesGenreWebsiteRequest
+  listAnimesGenre
 );
 
 export const listAnimesGenreController = new ListAnimesGenreController(
