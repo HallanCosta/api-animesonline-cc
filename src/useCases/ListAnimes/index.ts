@@ -1,11 +1,11 @@
 import { ListAnimesUseCase } from './ListAnimesUseCase';
 import { ListAnimesController } from './ListAnimesController';
-import { ListAnimesWebsiteRequest } from '../../services/implementations/ListAnimesWebsiteRequest';
+import { ListAnimes } from '../../services/implementations/ListAnimes';
 
-const listAnimesWebsiteRequest = new ListAnimesWebsiteRequest;
+const listAnimes = new ListAnimes;
 
 export const listAnimesUseCase = new ListAnimesUseCase(
-  listAnimesWebsiteRequest
+  listAnimes
 );
 
 export const listAnimesController = new ListAnimesController(

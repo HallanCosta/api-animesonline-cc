@@ -1,8 +1,8 @@
-import { IListAnimesWebsiteRequest } from '../../services/IListAnimesWebsiteRequest';
+import { IListAnimes } from '../../services/IListAnimes';
 
 export class ListAnimesUseCase {
   constructor(
-   private listAnimes: IListAnimesWebsiteRequest 
+   private listAnimes: IListAnimes 
   ) {}
 
   async execute() {
