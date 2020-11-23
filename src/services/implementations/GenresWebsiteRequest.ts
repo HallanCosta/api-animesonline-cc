@@ -1,14 +1,11 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
 import { TGenre } from '../IGenresWebsiteRequest';
+import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
+
 export class GenresWebsiteRequest {
   async request(): Promise<TGenre[]> {
-    const browser = await puppeteer.launch({
-      // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
-      executablePath: path.join("/", "mnt", "c", "chrome-win", "chrome.exe"),
-      headless: true,
-      args: ["--no-sandbox"]
-    });
+    const browser = await puppeteer.launch(launchConfig);
 
     const page = await browser.newPage();
 
