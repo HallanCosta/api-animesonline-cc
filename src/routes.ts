@@ -51,5 +51,8 @@ routes.get('/genres/:idGenre/page/:currentPage', (request, response) => {
 routes.get('/episodes/', (request, response) => {
   return listEpisodesController.handle(request, response);
 });
+routes.get('/episodes/page/:currentPage', (request, response) => {
+  return listEpisodesController.handle(request, response);
+});
 
 export { routes };

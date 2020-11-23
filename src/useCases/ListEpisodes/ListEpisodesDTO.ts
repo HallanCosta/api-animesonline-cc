@@ -1,1 +1,3 @@
-export type ListEpisodesDTO = {}
+export type ListEpisodesRequestDTO = {
+  currentPage?: string;
+}

@@ -6,5 +6,5 @@ export type TListEpisodes = {
 }
 
 export interface IListEpisodes {
-  request(): Promise<TListEpisodes>;
+  request(currentPage?: string): Promise<TListEpisodes>;
 }

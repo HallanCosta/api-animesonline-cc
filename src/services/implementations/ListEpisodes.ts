@@ -5,12 +5,17 @@ import { TListEpisodes } from '../IListEpisodes';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
 export class ListEpisodes {
-  async request(): Promise<TListEpisodes> {
+  async request(currentPage?: string): Promise<TListEpisodes> {
     const browser = await puppeteer.launch(launchConfig);
 
     const page = await browser.newPage();
 
-    await page.goto(`https://animesonline.cc/episodio/`);
+    if (currentPage) {
+      await page.goto(`https://animesonline.cc/episodio/page/${currentPage}`);
+    } else {
+      await page.goto(`https://animesonline.cc/episodio/`);
+    }
+    
     
     const episodes = new Episodes;
     const listEpisodes = await episodes.listEpisodes(page);

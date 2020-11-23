@@ -7,5 +7,5 @@ type TListAnimesGenre = {
 }
 
 export interface IListAnimesGenre {
-  request(idGenre: string, currentPage: string): Promise<TListAnimesGenre>;
+  request(idGenre: string, currentPage?: string): Promise<TListAnimesGenre>;
 }
