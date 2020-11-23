@@ -1,6 +1,6 @@
 import puppeteer, { Page } from 'puppeteer';
 
-import { TGenre } from '../IGenresWebsiteRequest';
+import { TGenre } from '../IGenres';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
 export class Genres {
