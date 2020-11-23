@@ -7,7 +7,8 @@ export class ListAnimesGenreWebsiteRequest {
     const browser = await puppeteer.launch({
       // executablePath: path.join("/", "mnt", "c", "Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
       executablePath: path.join("/", "mnt", "c", "chrome-win", "chrome.exe"),
-      headless: false
+      headless: true,
+      args: ["--no-sandbox"]
     });
 
     const page = await browser.newPage();
@@ -31,7 +32,7 @@ export class ListAnimesGenreWebsiteRequest {
   async title(page: Page) {
     const animesGenre = await page.evaluate(() => {
       const { innerText: title } = document.querySelector('header > h1') as HTMLElement;
-      
+
       console.log(title);
 
       return title;
