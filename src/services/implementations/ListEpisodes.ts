@@ -1,11 +1,11 @@
 import puppeteer, { Page } from 'puppeteer';
 
 import { Episodes } from '../../common/utils/Episodes/Episodes';
-import { TRequest } from '../IListEpisodesWebsiteRequest';
+import { TListEpisodes } from '../IListEpisodes';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
-export class ListEpisodesWebsiteRequest {
-  async request(): Promise<TRequest> {
+export class ListEpisodes {
+  async request(): Promise<TListEpisodes> {
     const browser = await puppeteer.launch(launchConfig);
 
     const page = await browser.newPage();

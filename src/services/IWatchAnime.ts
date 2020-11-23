@@ -22,6 +22,6 @@ export type TAnimeEpisode = {
   episodesAnimeURLText: string;
 }
 
-export interface IWatchAnimeWebsiteRequest {
+export interface IWatchAnime {
   request(idEpisode: string): Promise<TAnimeEpisode>;
 }

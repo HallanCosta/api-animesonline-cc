@@ -1,9 +1,9 @@
 import puppeteer, { Page } from 'puppeteer';
 
-import { TAnimeEpisode } from '../IWatchAnimeWebsiteRequest';
+import { TAnimeEpisode } from '../IWatchAnime';
 import { launchConfig } from '../../common/utils/PuppeteerLaunch/PuppeteerLaunch';
 
-export class WatchAnimeWebsiteRequest {
+export class WatchAnime {
 
   async request(idEpisode: string) {
     const browser = await puppeteer.launch(launchConfig);

@@ -1,11 +1,11 @@
 import { WatchAnimeController } from './WatchAnimeController';
 import { WatchAnimeUseCase } from './WatchAnimeUseCase';
-import { WatchAnimeWebsiteRequest } from '../../services/implementations/WatchAnimeWebsiteRequest';
+import { WatchAnime } from '../../services/implementations/WatchAnime';
 
-const watchAnimeWebsiteRequest = new WatchAnimeWebsiteRequest;
+const watchAnime = new WatchAnime;
 
 export const watchAnimeUseCase = new WatchAnimeUseCase(
-  watchAnimeWebsiteRequest
+  watchAnime
 );
 
 export const watchAnimeController = new WatchAnimeController(

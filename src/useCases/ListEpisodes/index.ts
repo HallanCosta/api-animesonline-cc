@@ -1,11 +1,11 @@
 import { ListEpisodesController } from './ListEpisodesController';
 import { ListEpisodesUseCase } from './ListEpisodesUseCase';
-import { ListEpisodesWebsiteRequest } from '../../services/implementations/ListEpisodesWebsiteRequest';
+import { ListEpisodes } from '../../services/implementations/ListEpisodes';
 
-const listEpisodesWebsiteRequest = new ListEpisodesWebsiteRequest;
+const listEpisodes = new ListEpisodes;
 
 export const listEpisodesUseCase = new ListEpisodesUseCase(
-  listEpisodesWebsiteRequest
+  listEpisodes
 );
 
 export const listEpisodesController = new ListEpisodesController(

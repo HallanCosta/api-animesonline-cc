@@ -1,8 +1,8 @@
-import { IListEpisodesWebsiteRequest } from '../../services/IListEpisodesWebsiteRequest';
+import { IListEpisodes } from '../../services/IListEpisodes';
 
 export class ListEpisodesUseCase {
   constructor(
-    private listEpisodes: IListEpisodesWebsiteRequest
+    private listEpisodes: IListEpisodes
   ) {}
   
   async execute() {
