@@ -15,10 +15,6 @@ routes.get('/', (request, response) => {
   return homeController.handle(request, response);
 });
 
-routes.get('/episode/:idEpisode', (request, response) => {
-  return watchAnimeController.handle(request, response);
-});
-
 routes.get('/anime/:idAnime', (request, response) => {
   return animeDetailsController.handle(request, response);
 });
@@ -53,6 +49,10 @@ routes.get('/episodes/', (request, response) => {
 });
 routes.get('/episodes/page/:currentPage', (request, response) => {
   return listEpisodesController.handle(request, response);
+});
+
+routes.get('/episode/:idEpisode', (request, response) => {
+  return watchAnimeController.handle(request, response);
 });
 
 export { routes };
