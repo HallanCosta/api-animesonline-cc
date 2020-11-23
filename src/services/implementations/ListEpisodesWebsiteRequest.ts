@@ -1,7 +1,7 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
 
-import { Episodes } from '../../common/utils/Episodes';
+import { Episodes } from '../../common/utils/Episodes/Episodes';
 import { TRequest } from '../IListEpisodesWebsiteRequest';
 
 export class ListEpisodesWebsiteRequest {

@@ -1,7 +1,7 @@
 import puppeteer, { Page } from 'puppeteer';
 import path from 'path';
 import { TAnimesFinded } from '../IFindAnimeNameLikeWebsiteRequest';
-import { Animes } from '../../common/utils/Animes';
+import { Animes } from '../../common/utils/Animes/Animes';
 
 export class FindAnimeNameLikeWebsiteRequest {
   async request(name: string): Promise<TAnimesFinded> {

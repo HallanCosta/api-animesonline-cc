@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import path from 'path';
 
-import { Animes } from '../../common/utils/Animes';
+import { Animes } from '../../common/utils/Animes/Animes';
 
 export class ListAnimesWebsiteRequest {
   async request() {
