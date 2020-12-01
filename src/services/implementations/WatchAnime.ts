@@ -22,42 +22,27 @@ export class WatchAnime {
   async watchAnime(page: Page): Promise<TAnimeEpisode> {
 
     const episode = await page.evaluate(async () => {
-      //sem dublagem url: https://animesonline.cc/episodio/senyoku-no-sigrdrifa-episodio-2/
-      //com dublagem url: https://animesonline.cc/episodio/darling-in-the-franxx-episodio-1/
       
-      let animesURL = undefined;
-      const animesURLIframe: NodeListOf<HTMLIFrameElement> = document.querySelectorAll('iframe.metaframe.rptss');
-      const animeURLIframeArray: HTMLIFrameElement[] = [...animesURLIframe];
-      
-      const animesURLDubbedSubtitled = animeURLIframeArray.map(anime => ({
-        src: anime.src
-      }));
+      const source1 = document.querySelector('#option-1 > video > source') as HTMLSourceElement;
+      const source2 = document.querySelector('#option-2 > video > source') as HTMLSourceElement || { src: null };
 
-      if (animeURLIframeArray[1]) {
-        animesURL = {
-          dubbed: animesURLDubbedSubtitled[0],
-          subtitled: animesURLDubbedSubtitled[1]
-        }
-      } else {
-        animesURL = {
-          subtitled: animesURLDubbedSubtitled[0]
-        }
-      }
+      const idVideo = source2.src
+      ? { dubbed: source1.src, subtitled: source2.src } 
+      : { subtitled: source1.src }
 
-      const title = document.querySelector('.epih1')?.innerHTML;
-      const description = document.querySelector('#info p')?.innerHTML;
+      const { innerText: title } = document.querySelector('.epih1') as HTMLElement;
+      const { innerText: description } = document.querySelector('#info p') as HTMLParagraphElement;
       const { src: imageDescription } = document.querySelector('.imgep img') as HTMLImageElement;
-      const { href: episodesAnimeURL } = document.querySelector('.areaserie a') as HTMLAnchorElement;
-      const episodesAnimeURLText = document.querySelector('.areaserie a')?.innerHTML;
-
+      const { href: idAnime } = document.querySelector('.areaserie a') as HTMLAnchorElement;
+      const { href: idAnimeForText } = document.querySelector('.areaserie a') as HTMLAnchorElement;
 
       const episode = {
-        animesURL,
+        idVideo,
         title,
         description,
         imageDescription,
-        episodesAnimeURLText,
-        episodesAnimeURL
+        idAnimeForText,
+        idAnime
       };
 
       console.log(episode);

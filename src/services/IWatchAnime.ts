@@ -1,25 +1,19 @@
-type TAnimesURL = {
-  dubbed: {
-    src: string
-  };
-  subtitled: {
-    src: string;
-  };
+type TVideos = {
+  dubbed: string;
+  subtitled: string;
 } 
 
-type TAnimeURL = {
-  subtitled: {
-    src: string;
-  };
+type TVideo = {
+  subtitled: string;
 } 
 
 export type TAnimeEpisode = {
-  animesURL: TAnimesURL | TAnimeURL;
+  idVideo: TVideos | TVideo;
   title: string;
   description: string;
   imageDescription: string;
-  episodesAnimeURL: string;
-  episodesAnimeURLText: string;
+  idAnimeForText: string;
+  idAnime: string;
 }
 
 export interface IWatchAnime {
