@@ -22,13 +22,13 @@ export class WatchAnime {
   async watchAnime(page: Page): Promise<TAnimeEpisode> {
 
     const episode = await page.evaluate(async () => {
-      
-      const source1 = document.querySelector('#option-1 > video > source') as HTMLSourceElement;
-      const source2 = document.querySelector('#option-2 > video > source') as HTMLSourceElement || { src: null };
 
-      const idVideo = source2.src
-      ? { dubbed: source1.src, subtitled: source2.src } 
-      : { subtitled: source1.src }
+      const iframeNodeList: NodeListOf<HTMLIFrameElement> = document.querySelectorAll('iframe.metaframe.rptss');
+      const iframeArray = [...iframeNodeList];
+
+      const idVideo = iframeArray[1] 
+      ? { dubbed: iframeArray[0].src, subtitled: iframeArray[1].src } 
+      : { subtitled: iframeArray[0].src }
 
       const { innerText: title } = document.querySelector('.epih1') as HTMLElement;
       const { innerText: description } = document.querySelector('#info p') as HTMLParagraphElement;
