@@ -46,7 +46,7 @@ export class AnimeDetails {
 
         return ({
           idGenre,
-          name
+          name: genre
         });
       });
 
