@@ -169,7 +169,8 @@ export class AnimeDetails {
       const animesRelated = idAnimes.map((anime, index) => ({
         idAnime: anime.idAnime,
         image: images[index].image,
-        name: names[index].name
+        name: names[index].name,
+        rating: '0.0'
       }));
 
       console.log('Animes Related >');
