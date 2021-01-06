@@ -1,6 +1,6 @@
 type TGenres = {
   idGenre: string,
-  genre: string
+  name: string
 }
 
 export type TAnimeDetails = {
