@@ -4,31 +4,37 @@
   "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "build": "tsc",
     "start": "node dist/server.js",
+    "clean": "rimraf dist",
+    "compile": "yarn clean && yarn build",
+    "build:babel": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "dev": "tsnd --transpile-only --respawn --ignore-watch node_modules src/server.ts"
   },
   "keywords": [],
   "author": "HállanCosta",
+  "engines": {
+    "node": "14.15.1"
+  },
   "devDependencies": {
-    "@babel/cli": "^7.12.7",
-    "@babel/core": "^7.12.7",
-    "@babel/node": "^7.12.6",
-    "@babel/preset-env": "^7.12.7",
-    "@babel/preset-typescript": "^7.12.7",
-    "@types/cheerio": "^0.22.22",
-    "@types/cors": "^2.8.8",
-    "@types/express": "^4.17.8",
-    "@types/node": "^14.11.8",
-    "@types/puppeteer": "^3.0.2",
-    "babel-plugin-module-resolver": "^4.0.0",
-    "ts-node-dev": "^1.0.0-pre.63",
-    "typescript": "^4.0.3"
+    "@babel/cli": "7.12.7",
+    "@babel/core": "7.12.7",
+    "@babel/node": "7.12.6",
+    "@babel/preset-env": "7.12.7",
+    "@babel/preset-typescript": "7.12.7",
+    "@types/cheerio": "0.22.22",
+    "@types/cors": "2.8.8",
+    "@types/express": "4.17.8",
+    "@types/node": "14.11.8",
+    "@types/puppeteer": "3.0.2",
+    "babel-plugin-module-resolver": "4.0.0",
+    "ts-node-dev": "1.0.0-pre.63",
+    "typescript": "4.0.3"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "puppeteer": "^5.3.1"
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "puppeteer": "5.3.1"
   }
 }
